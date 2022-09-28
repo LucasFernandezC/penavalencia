@@ -1,0 +1,49 @@
+.list-products {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.modal-custom {
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width: fit-content;
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    box-shadow: 1px 5px 5px #00000047;
+    border-radius: 5px;
+    padding: 20px;
+    
+    
+    
+  
+}
+.modal-custom svg {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    cursor: pointer;
+}
+
+.btncerrar{
+    float: right;
+}
+
+.btncerrar:hover{
+    background-color: black;
+    color: white;
+    cursor:pointer;
+    
+}
+
+.modal-custom h2{
+    color: black;
+}
+
+.modal-custom.modalBlur > *:not(.modal) {
+    filter: blur(5px);
+  }

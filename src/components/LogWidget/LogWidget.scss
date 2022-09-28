@@ -1,0 +1,40 @@
+i:hover{
+    cursor:pointer;
+
+}
+
+.form__text{
+    width: 250px;
+}
+
+.form__number{
+    width: 200px;
+}
+
+.form__email{
+    width: 300;
+}
+
+.form__buttons{
+    display: flex;
+    flex-direction: row;
+        
+}
+
+.form__buttons button{
+    margin: 0px 20px;
+    padding: 5px;
+}
+
+.regiter__error{
+    color: red;
+    font-style: italic;
+    
+}
+
+.log__button{
+    background-color: black;
+    color: white;
+    margin: 2px;
+    text-transform: uppercase;
+}
