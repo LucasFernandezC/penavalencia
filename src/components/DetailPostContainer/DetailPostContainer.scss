@@ -1,0 +1,51 @@
+p{
+    color: black;
+    text-align: start;
+    font-style: italic;
+    
+}
+
+p:before {
+    
+    content: open-quote;
+    
+    margin-right: 5px;
+  }
+p:after {
+    
+    content: close-quote;
+    margin-left: 5px;
+  }
+
+.post-item-title{
+    text-align: start;
+    text-transform: uppercase;
+    color:lightslategrey;
+}
+
+.post-item-date{
+    text-align: end;
+    
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.post-item-button{
+    
+    text-align: end;
+    button{
+        background-color: #0D1597;
+        color: #A70000;
+        font-weight: bolder;
+        font-size: small;
+        font-style: oblique;
+    }
+}
+
+
+
+.post-item-detail{
+    background-color:gainsboro;
+    border-radius: 10px;
+    margin-bottom: 7px;
+}

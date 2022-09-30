@@ -1,0 +1,15 @@
+.form-comment-head{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    margin: 1px;
+    padding: 1px;
+    background-color: gray;
+    border-radius: 10px;
+    
+    p{
+        font-weight: lighter;
+        font-size: small;
+
+    }
+}

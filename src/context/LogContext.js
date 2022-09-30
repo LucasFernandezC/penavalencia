@@ -7,8 +7,10 @@ const logContext = createContext();
 const LogProvider = ({ children }) => {
   const [userCredentials, setUserCredentials] = useState({
     mail: "",
+    name:"",
     password: "",
-    penaId: ""
+    penaId: "",
+    _id: ""
   });
 
   const encrypt = new JSEncrypt();
@@ -59,7 +61,7 @@ const LogProvider = ({ children }) => {
 
   const validateUser = async () => {
     let resultado
-    let url = "http://localhost:4000/getData" + userCredentials.mail
+    let url = "http://localhost:4000/getData/" + userCredentials.mail
     console.log(url)
     await fetch(url, {
       method: "GET",
@@ -79,7 +81,7 @@ const LogProvider = ({ children }) => {
                 setUserLogged(true)
                 setUserValidated(true)
                 console.log(data.penaId)
-                setUserCredentials({...userCredentials, penaId: data.penaId})
+                setUserCredentials({...userCredentials, penaId: data.penaId, _id:data._id, name: data.nombre})
               }
               else {
                 console.log("password incorrecta")
