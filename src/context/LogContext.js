@@ -10,7 +10,8 @@ const LogProvider = ({ children }) => {
     name:"",
     password: "",
     penaId: "",
-    _id: ""
+    _id: "",
+    urlImg: ""
   });
 
   const encrypt = new JSEncrypt();
@@ -81,7 +82,7 @@ const LogProvider = ({ children }) => {
                 setUserLogged(true)
                 setUserValidated(true)
                 console.log(data.penaId)
-                setUserCredentials({...userCredentials, penaId: data.penaId, _id:data._id, name: data.nombre})
+                setUserCredentials({...userCredentials, penaId: data.penaId, _id:data._id, name: data.nombre, urlImg: data.url})
               }
               else {
                 console.log("password incorrecta")

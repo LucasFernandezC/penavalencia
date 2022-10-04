@@ -9,7 +9,8 @@ let user = new Schema({
     domicilio: {type: String},
     socio: {type: Number},
     sociofundador: {type: Number},
-    password: {type:String}
+    password: {type:String},
+    url: {type:String}
 })
 
 module.exports = mongoose.model("user", user)

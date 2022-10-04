@@ -42,6 +42,8 @@
 
 .modal-custom h2{
     color: black;
+    display: inline;
+    margin: 10px;
 }
 
 .modal-custom.modalBlur > *:not(.modal) {
