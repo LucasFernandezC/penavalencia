@@ -75,7 +75,7 @@ router.get("/getData/:mail", async function (req, res) {
     res.send(usuario)
   });
 
-  router.post("/uploadfile", async function (req, res) {
+  router.post("/user/uploadfile", async function (req, res) {
     console.log("llegue a subir el archivo", req.params, req.file)
     try {
       if(!req.files) {

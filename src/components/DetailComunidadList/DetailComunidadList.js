@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
 const DetailComunidadList = (props) => {
-console.log("props detail comunidad list ",props.props, props.props._id)
+
     return(
         <>
         <div className="forum-item active">

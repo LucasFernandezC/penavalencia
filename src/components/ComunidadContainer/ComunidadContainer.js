@@ -25,6 +25,7 @@ const ComunidadContainer = () => {
         let resultado
         let url = "http://localhost:4000/getDataPosts"
         console.log(url)
+        setNuevoPost(false)
         await fetch(url, {
             method: "GET",
             headers: {

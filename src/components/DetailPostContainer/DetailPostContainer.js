@@ -14,20 +14,24 @@ const DetailPostContainer = () => {
     const { category, postid } = useParams()
     const [post, setPost] = useState({})
     const [existComments, setExistComments] = useState(false)
+    const [existImages, setExistImages] = useState(false)
     const [newComment, setNewComment] = useState()
-    
+    const [image, setImage] = useState([])
+
 
 
     useEffect(() => {
         getPost()
+        setImage([])
     }, [])
 
     useEffect(() => {
         getPost()
+        setImage([])
     }, [showModal])
 
     const getPost = async () => {
-
+        console.log("estoy buscando post ", category, postid)
         let resultado
         let url = "http://localhost:4000/getDataPosts/" + category + "/" + postid
         console.log("ruta: ", url)
@@ -42,6 +46,8 @@ const DetailPostContainer = () => {
                 respuesta.json()
                     .then((data) => {
                         data.comments.length > 0 ? setExistComments(true) : setExistComments(false)
+                        data.urlImg.length > 0 ? setExistImages(true) : setExistImages(false)
+                        console.log(data)
                         setPost(data)
                     })
                     .catch(() => {
@@ -59,41 +65,85 @@ const DetailPostContainer = () => {
 
     const submitPost = async (e) => {
         e.preventDefault()
-        let addNewComment = {
+        let addNewComment = {}
+        addNewComment = {
             _id: postid,
             user: userCredentials._id,
             username: userCredentials.name,
             comment: newComment,
+            urlImgs: [],
             commentdate: new Date(Date.now())
         }
-        await insertComment(addNewComment)
+        
+        if (image.length!=0) {
+            addNewComment.urlImgs = await uploadImage()
+        } 
+        insertComment(addNewComment)
         getPost()
-        console.log("submitie post ", newComment)
+        console.log("submitie post ", addNewComment)
+        
         setShowModal(false)
+
+
+
     }
 
-    const insertComment = (data) =>{
+    const insertComment = async (data) => {
+        console.log("entre a cargar el coment con ", data)
         var post = 'http://localhost:4000/inserComment/' + postid
-    var datajson = JSON.stringify(data)
-    fetch(post, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: datajson,
-    })
+        var datajson = JSON.stringify(data)
+        return fetch(post, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: datajson,
+        })
 
-      .then((response) => {
-        console.log("esta es la respuesta ",response)
-        
-      })
-      
+            .then((response) => {
+                console.log("esta es la respuesta ", response)
+
+            })
+
+    }
+    const uploadImage = async () => {
+        console.log("entre a subir la imagen", image)
+        var usr = 'http://localhost:4000/post/uploadfile'
+        return fetch(usr, {
+            method: 'POST',
+            body: image,
+        })
+            .then((response) => {
+                return response.json()
+            })
+            .then((json) => {
+                console.log(json.data)
+                return json.data.url
+
+            })
+
     }
 
     const handleChange = (e) => {
         setNewComment(e.target.value)
-}
+    }
+
+    const changeHandler = (event) => {
+
+        const data = new FormData();
+        if (event.target.files.length > 1) {
+            for (var i = 0; i < event.target.files.length; i++) {
+                data.append("file", event.target.files[i])
+            }
+        } else {
+            data.append("file", event.target.files[0])
+        }
+
+        //data.append("file", event.target.files[0])
+        return setImage(data)
+
+    };
 
 
     return (
@@ -134,6 +184,13 @@ const DetailPostContainer = () => {
                                         <div className="row post-item-detail">
                                             <div className="col-md-12">
                                                 <p>{post.msj}</p>
+                                                {console.log(post)}
+                                                {existImages && post.urlImg.map((img) => {
+                                                    return (
+                                                        <img src={img} className="post-item-img"></img>
+                                                    )
+                                                })}
+
                                             </div>
                                         </div>
                                         <div className="row">
@@ -155,6 +212,7 @@ const DetailPostContainer = () => {
                                                         onChange={handleChange}
 
                                                     />
+                                                    <input type="file" name="file" multiple="true" onChange={changeHandler} />
                                                     <div className="form__com__buttons">
 
                                                         <button type="submit" className="com__button for_button">Confirmar!</button>
@@ -173,7 +231,14 @@ const DetailPostContainer = () => {
                                     {existComments && post.comments.map((comment) => {
 
                                         return (
-                                            <CommentPost key={comment.commentdate} props={comment} />
+                                            <div className=" forum-container">
+                                                <CommentPost key={comment.commentdate} props={comment} />
+                                                <div className="row">
+                                                    <div className="col-md-12 post-item-button">
+                                                        <button onClick={agregarComentario}> Agregar Comentario  </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         )
                                     }
                                     )

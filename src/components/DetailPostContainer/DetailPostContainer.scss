@@ -34,11 +34,11 @@ p:after {
     
     text-align: end;
     button{
-        background-color: #0D1597;
-        color: #A70000;
-        font-weight: bolder;
+        background-color: black;
+        color: white;
+        
         font-size: small;
-        font-style: oblique;
+        
     }
 }
 
@@ -48,4 +48,11 @@ p:after {
     background-color:gainsboro;
     border-radius: 10px;
     margin-bottom: 7px;
+}
+
+.post-item-img{
+    width: 30%;
+    align-self: center;
+    justify-self: center;
+    margin: 2%;
 }

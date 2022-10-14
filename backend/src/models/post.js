@@ -7,6 +7,7 @@ let post = new Schema({
     category: {type: String},
     title: {type:String},
     msj: {type:String},
+    urlImg: {type:Array},
     comments: {type:Array}
 })
 

@@ -88,7 +88,7 @@ const LogWidget = () => {
     
     const data = new FormData();
     data.append("file", event.target.files[0])
-    var usr = 'http://localhost:4000/uploadfile'
+    var usr = 'http://localhost:4000/user/uploadfile'
     fetch(usr, {
       method: 'POST',
       body: data,

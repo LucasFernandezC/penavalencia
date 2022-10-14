@@ -7,7 +7,7 @@ const logContext = createContext();
 const LogProvider = ({ children }) => {
   const [userCredentials, setUserCredentials] = useState({
     mail: "",
-    name:"",
+    name: "",
     password: "",
     penaId: "",
     _id: "",
@@ -55,7 +55,7 @@ const LogProvider = ({ children }) => {
 
   const checkPass = (clave) => {
     let resultado
-    
+
     userCredentials.password == clave ? resultado = true : resultado = false;
     return resultado
   }
@@ -64,87 +64,84 @@ const LogProvider = ({ children }) => {
     let resultado
     let url = "http://localhost:4000/getData/" + userCredentials.mail
     console.log(url)
-    await fetch(url, {
-      method: "GET",
-      headers: {
-        Accept: "aplication/json"
+    try {
+      const respuesta = await fetch(url, {
+        method: "GET",
+        headers: {
+          Accept: "aplication/json"
+        }
+      });
+
+      const data = await respuesta.json();
+
+      console.log(data)
+      let pass = data.password
+      var desencriptada = decrypt.decrypt(pass)
+      if (desencriptada) {
+        if (checkPass(desencriptada)) {
+          setUserLogged(true)
+          setUserValidated(true)
+          console.log(data.penaId)
+          setUserCredentials({ ...userCredentials, penaId: data.penaId, _id: data._id, name: data.nombre, urlImg: data.url })
+        }
+        else {
+          console.log("password incorrecta")
+          setPassErr(true)
+          setUserLogged(false)
+        }
+      } else {
+        setUserLogged(false)
+        setUserValidated(true)
       }
-    })
-      .then((respuesta) => {
+    } catch (err) {
+      console.error(err);
+      setUserValidated(true);
+    }
 
-        respuesta.json()
-          .then((data) => {
-            console.log(data)
-            let pass = data.password
-            var desencriptada = decrypt.decrypt(pass)
-            if (desencriptada) {
-              if (checkPass(desencriptada)) {
-                setUserLogged(true)
-                setUserValidated(true)
-                console.log(data.penaId)
-                setUserCredentials({...userCredentials, penaId: data.penaId, _id:data._id, name: data.nombre, urlImg: data.url})
-              }
-              else {
-                console.log("password incorrecta")
-                setPassErr(true)
-                setUserLogged(false)
-              }
-            } else {
-              setUserLogged(false)
-              setUserValidated(true)
-            }
-
-          })
-          .catch(() => {
-            setUserValidated(true)
-          })
-
-      }
-      )
     return resultado
   }
 
-  const userRegister = (usuario) => {
-    var encriptado = encrypt.encrypt(usuario.password)
-    usuario.password=encriptado
-    var data = JSON.stringify(usuario)
-    var usr = 'http://localhost:4000/inserUser'
-    fetch(usr, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: data,
+const userRegister = (usuario) => {
+  var encriptado = encrypt.encrypt(usuario.password)
+  usuario.password = encriptado
+  var data = JSON.stringify(usuario)
+  var usr = 'http://localhost:4000/inserUser'
+  fetch(usr, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: data,
+  })
+
+    .then((response) => {
+      return response.json()
     })
-
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        console.log(json.data)
-      })
-  }
+    .then((json) => {
+      console.log(json.data)
+    })
+}
 
 
 
 
 
-  const data = {
-    validateUser,
-    setUserCredentials,
-    userLogged,
-    setUserLogged,
-    userValidated,
-    setUserValidated,
-    userCredentials,
-    setFormSubmitted,
-    userRegister,
-    passErr,
-    setPassErr,
-  };
+const data = {
+  validateUser,
+  setUserCredentials,
+  userLogged,
+  setUserLogged,
+  userValidated,
+  setUserValidated,
+  userCredentials,
+  setFormSubmitted,
+  userRegister,
+  passErr,
+  setPassErr,
+};
 
-  return <logContext.Provider value={data}>{children}</logContext.Provider>;
+return <logContext.Provider value={data}>{children}</logContext.Provider>;
 };
 
 export default LogProvider;
