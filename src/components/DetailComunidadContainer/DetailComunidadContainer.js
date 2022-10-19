@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DetailComunidadList from "../DetailComunidadList/DetailComunidadList";
 import "./DetailComunidadContainer.scss"
@@ -61,6 +61,7 @@ const DetailComunidadContainer = () => {
                                             <div className="pull-right forum-desc">
                                                 <small>Total posts: {cantidadPost}</small>
                                             </div>
+                                            <Link to={`/comunidad`} className="post-volver"><h2 className="post-volver"><i class="bi bi-arrow-left-square"></i></h2></Link>
                                         </div>
                                     </div>
                                     <div className="col-lg-1">

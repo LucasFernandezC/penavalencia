@@ -1,10 +1,10 @@
-
+import EventsContainer from "../EventsContainer/EventsContainer";
 
 const Eventos = () => {
 
     return(
         <>
-            aca va a estar la agenda de eventos
+            <EventsContainer />
         </>
     )
 }

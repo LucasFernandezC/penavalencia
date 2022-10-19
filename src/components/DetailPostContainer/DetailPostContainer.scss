@@ -1,17 +1,17 @@
-p{
+.post-item-msj{
     color: black;
     text-align: start;
     font-style: italic;
     
 }
 
-p:before {
+.post-item-msj:before {
     
     content: open-quote;
     
     margin-right: 5px;
   }
-p:after {
+.post-item-msj:after {
     
     content: close-quote;
     margin-left: 5px;
@@ -42,12 +42,16 @@ p:after {
     }
 }
 
-
+.post-volver{
+    color: gray;
+    
+}
 
 .post-item-detail{
     background-color:gainsboro;
     border-radius: 10px;
     margin-bottom: 7px;
+    white-space: pre-line;
 }
 
 .post-item-img{

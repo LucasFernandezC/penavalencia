@@ -159,6 +159,7 @@ const ComWidget = (props) => {
                 name="title"
                 placeholder="Ingrese el titulo"
                 onChange={handleChange}
+                autoFocus="true"
 
               />
               <select

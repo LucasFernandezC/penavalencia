@@ -13,7 +13,7 @@ const CommentPost = (props) => {
                         </div>
                     </div>
                     <div className="col-md-12">
-                        <p>{props.props.comment}</p>
+                        <p className="post-item-msj">{props.props.comment}</p>
                         {props.props.urlImgs.map((img)=> {
                             return(
                                 <img src={img} key={img} className="post-item-img"></img>

@@ -2,7 +2,7 @@ import "./ComunidadContainer.scss"
 import { useState, useEffect } from "react";
 import ComunidadList from "../ComunidadList/ComunidadList";
 import ComWidget from "../ComWidget/ComWidget";
-import LogWidget from "../LogWidget/LogWidget";
+
 
 const ComunidadContainer = () => {
 
@@ -10,15 +10,44 @@ const ComunidadContainer = () => {
     const [cantidadPost, setCantidadPost] = useState()
     const [nuevoPost, setNuevoPost] = useState(false)
     const [categorias, setCategorias] = useState([{
-
     }])
+    const [categoriesDetail, setCategoriesDetail] = useState([{}])
 
     useEffect(() => {
-        getPosts().then((data) => {
-            console.log("traje las cates", data)
-        })
-    }, [nuevoPost])
+        getCategories()
+    }, [])
 
+    useEffect(() => {
+        getPosts().then(() => {
+            console.log("cargue todo")
+        })
+    }, [nuevoPost, categoriesDetail])
+
+    
+
+    const getCategories = async () => {
+        let resultado
+        let url = "http://localhost:4000/getDataCategories"
+        await fetch(url, {
+            method: "GET",
+            headers: {
+                Accept: "aplication/json"
+            }
+        })
+            .then((respuesta) => {
+                respuesta.json()
+                    .then((data) => {
+                        console.log("esto traje de la BD: ", data)
+                        setCategoriesDetail(data)
+                    })
+                    .catch(() => {
+                        console.log("sali por error  ")
+                    })
+
+            }
+            )
+        return resultado
+    }
 
     const getPosts = async () => {
         let array = []
@@ -26,7 +55,7 @@ const ComunidadContainer = () => {
         let url = "http://localhost:4000/getDataPosts"
         console.log(url)
         setNuevoPost(false)
-        await fetch(url, {
+        return fetch(url, {
             method: "GET",
             headers: {
                 Accept: "aplication/json"
@@ -38,12 +67,11 @@ const ComunidadContainer = () => {
                     .then((data) => {
                         setCantidadPost(data.length)
                         data.forEach(element => {
-
-                            let index = array.findIndex((el) => el.categoria == element.category
-                            )
-
+                            let index = array.findIndex((el) => el.categoria == element.category)
+                            
                             if (index === -1) {
-                                array.push({ categoria: element.category, cantidad: 1 })
+                                
+                                array.push({ categoria: element.category, description: categoriesDetail.find((pep)=> pep.category==element.category).description, cantidad: 1 })
 
                             } else {
                                 array[index].cantidad++
@@ -58,7 +86,7 @@ const ComunidadContainer = () => {
 
             }
             )
-        return resultado
+
     }
 
 

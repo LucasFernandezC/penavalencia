@@ -39,7 +39,7 @@ app.use(express.json())
 
 // routes
 app.use(require("./routes/Posts"));
-
+app.use(require("./routes/Events"))
 app.use(require("./routes/User"));
 app.use(require("./routes/Categories"));
 

@@ -18,7 +18,7 @@ const DetailComunidadList = (props) => {
                             {props.props.comments.length}
                         </span>
                         <div>
-                            <small>Posts</small>
+                            <small>Comentarios</small>
                         </div>
                     </div>
                 </div>

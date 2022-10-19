@@ -1,5 +1,5 @@
 
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { logContext } from "../../context/LogContext";
 import "./DetailPostContainer.scss"
@@ -31,7 +31,7 @@ const DetailPostContainer = () => {
     }, [showModal])
 
     const getPost = async () => {
-        console.log("estoy buscando post ", category, postid)
+        
         let resultado
         let url = "http://localhost:4000/getDataPosts/" + category + "/" + postid
         console.log("ruta: ", url)
@@ -56,7 +56,7 @@ const DetailPostContainer = () => {
 
             }
             )
-        return resultado
+        
     }
 
     const agregarComentario = () => {
@@ -89,7 +89,7 @@ const DetailPostContainer = () => {
     }
 
     const insertComment = async (data) => {
-        console.log("entre a cargar el coment con ", data)
+        
         var post = 'http://localhost:4000/inserComment/' + postid
         var datajson = JSON.stringify(data)
         return fetch(post, {
@@ -159,7 +159,7 @@ const DetailPostContainer = () => {
                                         <i className="fa fa-globe text-navy mid-icon"></i>
                                     </div>
                                     <h2>Visualizacion de Post</h2>
-
+                                    <Link to={`/comunidad/${category}`} className="post-volver"><h2 className="post-volver"><i class="bi bi-arrow-left-square"></i></h2></Link>
                                 </div>
 
                             </div>
@@ -183,8 +183,7 @@ const DetailPostContainer = () => {
                                     <div className="ibox-content forum-container">
                                         <div className="row post-item-detail">
                                             <div className="col-md-12">
-                                                <p>{post.msj}</p>
-                                                {console.log(post)}
+                                                <p className="post-item-msj">{post.msj}</p>
                                                 {existImages && post.urlImg.map((img) => {
                                                     return (
                                                         <img src={img} className="post-item-img"></img>
@@ -205,11 +204,12 @@ const DetailPostContainer = () => {
                                             <Modal title={"Agregar Comentario"} close={() => setShowModal(false)}>
                                                 <form action="" id="form" className="form" onSubmit={submitPost}>
                                                     <textarea
-
+                                                        
                                                         className="form__text"
                                                         name="msj"
                                                         placeholder="Detalle su comentario"
                                                         onChange={handleChange}
+                                                        autoFocus="true"
 
                                                     />
                                                     <input type="file" name="file" multiple="true" onChange={changeHandler} />
